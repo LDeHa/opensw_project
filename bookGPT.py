@@ -1,33 +1,33 @@
 import openai
 
-openai.api_key = "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"
-
-
-
-
 class bookGPT :
-
-    def __init__(self) -> None:
-        pass
+    #책 감상을 출력하는 클래스
 
 
-    
-    def review(self,title,author):
+    #감상 출력 메서드
+    @staticmethod
+    def review(title,author):
+         #gpt에게 넘겨줄 스크립트
         message = "작가 " + author + "의 책 " + title + "의 감상문을 작성해줘"
 
+        #gpt에 스크립트 전달
         completion = openai.ChatCompletion.create(
             model ="gpt-3.5-turbo",
             messages=[
                 {"role" : "user", "content" : message}
                 ]
             )
+        #gpt의 답변 반환
         return completion.choices[0].message.content
 
     
-    def quote(self,title,author):
+    #책 문장 인용 메서드
+    @staticmethod
+    def quote(title,author):
+        #스크립트
         message = "작가 " + author + "의 책 " + title +  "에서 주요 문장 하나를 인용하고 인용한 이유를 알려줘"
 
-
+        #gpt에 스크립트 전달
         completion = openai.ChatCompletion.create(
 
         model ="gpt-3.5-turbo",
@@ -35,27 +35,38 @@ class bookGPT :
             {"role" : "user", "content" : message}
         ]
         )
+        #gpt의 답변 반환
         return completion.choices[0].message.content
 
-    def summary(self,title,author):
+    #책 내용 요약 메서드
+    @staticmethod
+    def summary(title,author):
+        #스크립트
         message = "책 " + title + "의 작가는 "+ author + "이고 이 책의 내용을 요약해줘"
 
+        #gpt에 스크립트 전달
         completion = openai.ChatCompletion.create(
             model ="gpt-3.5-turbo",
             messages=[
                 {"role" : "user", "content" : message}
                 ]
             )
+        #gpt의 답변 반환
         return completion.choices[0].message.content
     
-    def debate(self,title,author):
+    #토론 주제 및 의견 메서드
+    @staticmethod
+    def debate(title,author):
+        #스크립트
         message = "책 " + title + "의 작가는 "+ author + " 이고 이 책에서 구절 하나를 인용해서 토론 주제를 정하고, 그 주제에 대해서 너의 의견을 말해줘"
 
+        #gpt에 스크립트 전달
         completion = openai.ChatCompletion.create(
             model ="gpt-3.5-turbo",
             messages=[
                 {"role" : "user", "content" : message}
                 ]
             )
+        #gpt의 답변 반환
         return completion.choices[0].message.content
         

@@ -1,9 +1,12 @@
 from dbControl import *
 
+#gui대신 임시로 사용하는 테스트용 실행 클래스
+
 
 class Executer :
 
-    BookList : typeBook = []
+
+    BookList = []
 
     def __init__(self) -> None:
         pass
@@ -11,12 +14,21 @@ class Executer :
 
 
     def Show(self) :
+        count = 1
+
         for title, author in self.BookList :
-            print("%s   %s" %title %author)
+            print("%d : %s   %s" %(count, title, author))
+            count = count +1
 
    
 
     def Start(self) :
+
+        key = "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"
+
+        openai.api_key = key
+        #gpt 인증키
+
         DB = dbControl()
 
         while(1):
@@ -29,35 +41,42 @@ class Executer :
             if number == 1:
                 self.BookList = DB.makeListAll()
             elif number == 2:
-                self.BookList = DB.SearchAuthor()
+                author_name = input("작가 이름을 입력하세요: ")
+                self.BookList = DB.SearchAuthor(author_name)
             elif number == 3:
-                self.BookList = DB.SearchTitle()
+                title_name = input("책 제목을 입력하세요: ")
+                self.BookList = DB.SearchTitle(title_name)
             elif number == 4:
                 self.Show()
+
+            elif number == 5:
+                self.GPT()
+
             else :
-                print("정의되지 않은 동작")
+                print("정의되지 않은 동작\n")
 
 
     def GPT(self) :
         print("몇번 책을 고르시겠습니까")
-        n = input()
+        n = int(input())
 
-        Book : typeBook = self.BookList[n]
+        if n < len(self.BookList):
+            Book = self.BookList[n]
 
-        print("감상평 : \n")
-        Book.Review()
+        print("감상평 : %s\n" % Book.Review())
+        
         print("\n")
 
-        print("주요 문장 인용 : \n")
-        Book.Quote()
+        print("주요 문장 인용 : %s\n" % Book.Quote())
+        
         print("\n")
 
-        print("줄거리 요약 : \n")
-        Book.Summary()
+        print("줄거리 요약 : %s\n" % Book.Summary())
+        
         print("\n")
 
-        print("토론 주제 및 답변 : \n")
-        Book.Debate()
+        print("토론 주제 및 답변 : %s\n" % Book.Debate())
+        
         print("\n")
 
         
