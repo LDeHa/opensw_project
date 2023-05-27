@@ -3,7 +3,7 @@ from dbControl import *
 #gui대신 임시로 사용하는 테스트용 실행 클래스
 
 
-class Executer :
+class Execute :
 
 
     BookList = []
@@ -81,7 +81,7 @@ class Executer :
 
         
       
-Ex = Executer()
+Ex = Execute()
 Ex.Start()
 
 
